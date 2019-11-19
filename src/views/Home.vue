@@ -14,6 +14,13 @@
         <cpm-TableList v-bind="tableConfig" @tableCallback="tableCallback" @pageCallback="pageCallback"></cpm-TableList>
       </div>
     </div>
+
+    <div class="item-wrap">
+      <p class="item-title"><span>commonCss组件</span></p>
+      <div class="item-cpm" style="width: 100%;">
+        <cpm-commoncss></cpm-commoncss>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +28,7 @@
   // @ is an alias to /src
   import CustomSelect from "@/components/customSelect.vue";
   import TableList from "@/components/tableList.vue";
+  import CommonCss from "@/components/commonCss.vue";
   import {ajaxGetDataList} from '@/ajax.js';
   import '@/mock.js';
 
@@ -28,7 +36,8 @@
     name: 'home',
     components: {
       'cpmCustomSelect': CustomSelect,
-      'cpmTableList': TableList
+      'cpmTableList': TableList,
+      'cpmCommoncss': CommonCss
     },
     data () {
       return {
