@@ -22,7 +22,7 @@
         </tr>
       </table>
     </vperfect-scrollbar>
-    <div class="page-bar clearfix">
+    <div class="page-bar clearfix" v-if="totalPage > 0 && pageBar.show === true">
       <div class="bar-inside clearfix">
         <ul class="page-list clearfix">
           <li @click="pageCallback('prev')"><span class="prev-page"></span></li>
@@ -64,6 +64,12 @@
       pageSize: {
         type: Number,
         default: 12
+      },
+      pageBar: {
+        type: Object,
+        default: function () {
+          return {show: true};
+        }
       }
     },
     components: {
@@ -96,22 +102,28 @@
       totalPage: function (newVal, oldVal) {
         this.getPageList(1);
       },
-      dataList: function () {
-        let _this = this;
-
-        _this.$nextTick(function () {
-          let eleHeight = document.querySelector('.tabel').offsetHeight;
-          let curHeight = document.querySelector('.table-2').offsetHeight;
-
-          if (_this.firstLoad === true) {
-            _this.initTableHeight = eleHeight;
-          }
-          _this.firstLoad = _this.initTableHeight === 0;
-          if (_this.initTableHeight > curHeight && curHeight !== 0) {
-            document.querySelector('.tabel').style.height = curHeight + 'px';
-          }
-        });
+      curPage: function (newVal, oldVal) {
+        this.currentPage = this.curPage;
+      },
+      pageSize: function (newVal, oldVal) {
+        this.getPageList(1);
       }
+      // dataList: function () {
+      //   let _this = this;
+
+      //   _this.$nextTick(function () {
+      //     let eleHeight = document.querySelector('.tabel').offsetHeight;
+      //     let curHeight = document.querySelector('.table-2').offsetHeight;
+
+      //     if (_this.firstLoad === true) {
+      //       _this.initTableHeight = eleHeight;
+      //     }
+      //     _this.firstLoad = _this.initTableHeight === 0;
+      //     if (_this.initTableHeight >= curHeight && curHeight !== 0) {
+      //       document.querySelector('.tabel').style.height = curHeight + 'px';
+      //     }
+      //   });
+      // }
     },
     mounted () {
       let _this = this;
@@ -197,14 +209,13 @@
     width: 100%;
     height: auto;
     display: block;
-    font-family: "微软雅黑";
 
     .table{
       width: 100%;
       border: none;
       table-layout: fixed;
       word-break: break-all;
-      font-size: 14px;
+      font-size: 12px;
 
       tr{
         width: 100%;
@@ -215,13 +226,18 @@
         }
 
         &:nth-child(odd){
-          background: #f0f0f0;
+          background: #f7f7f7;
+        }
+
+        &:hover{
+          background: #eeeeee;
         }
       }
 
       th{
         height: 40px;
         color: #262626;
+        font-weight: normal;
       }
       td {
         height: 32px;
@@ -364,13 +380,14 @@
         color:#878787;
       }
 
-      &.btn-def{
-        color:#0079ff;
+      &.btn-add{
+        color:#fff;
         border-color:#0079ff;
+        background-color:#0079ff;
 
         &:hover{
-          color:#298fff;
-          border-color:#298fff;
+          color:#fff;
+          background:#298fff;
         }
       }
       &.btn-del{

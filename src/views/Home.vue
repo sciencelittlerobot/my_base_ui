@@ -4,6 +4,20 @@
     <div class="item-wrap">
       <p class="item-title"><span>select组件</span></p>
       <div class="item-cpm">
+        <select>
+          <option>选项一</option>
+          <option>选项二</option>
+          <option>选项三</option>
+          <option>选项四</option>
+          <option>选项五</option>
+          <option>选项六</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="item-wrap">
+      <p class="item-title"><span>select组件</span></p>
+      <div class="item-cpm">
         <cpm-CustomSelect v-bind="selectConfig" @selectCallback="selectCallback"></cpm-CustomSelect>
       </div>
     </div>
@@ -185,6 +199,10 @@
       .item-cpm{
         width: 200px;
         // min-height: 200px;
+      }
+
+      .table-viewer{
+        height: 640px;
       }
     }
   }
