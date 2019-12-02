@@ -86,6 +86,66 @@
         </pre>
         <p class="notes">注：根据箭头方向来调整对应border上面的参数。</p>
       </li>
+
+      <li class="list-item">
+        <p class="title"><i class="title-mark"></i>水滴形状，快看！它在这，有点丑的水滴 >>>>>> <i class="icon-water-drop"><span class="text">A</span><span class="water-drop"></span></i></p>
+        <pre>
+          .icon-water-drop{
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            position: relative;
+
+            .water-drop,
+            .text{
+              width: 20px;
+              height: 20px;
+              display: block;
+              position: relative;
+              color: #fff;
+              text-align: center;
+              font-size: 14px;
+              line-height: 20px;
+              font-style: normal;
+            }
+
+            .text {
+              position: absolute;
+              z-index: 100;
+            }
+
+            .water-drop:before {
+              content: '';
+              width: 20px;
+              height: 20px;
+              display: block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              z-index: 1;
+              background: #BCBCBC;
+              border-radius: 20px;
+            }
+
+            .water-drop:after {
+              content: '';
+              height: 0;
+              width: 0;
+              border: 8px transparent solid;
+              display: block;
+              position: absolute;
+              top: 2px;
+              left: 15px;
+              border-right: 8px solid transparent;
+              border-bottom: 8px solid transparent;
+              border-left: 8px solid #BCBCBC;
+            }
+          }
+
+          &lt;i class="icon-water-drop"&gt;&lt;span class="text"&gt;A&lt;/span&gt;&lt;span class="water-drop"&gt;&lt;/span&gt;&lt;/i&gt;
+        </pre>
+        <p class="notes"></p>
+      </li>
     </ul>
 
   </div>
@@ -199,6 +259,58 @@ export default {
             top: -1px;
           }
         }
+
+        .icon-water-drop{
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+          position: relative;
+
+          .water-drop,
+          .text{
+            width: 20px;
+            height: 20px;
+            display: block;
+            position: relative;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+            font-style: normal;
+          }
+
+          .text {
+            position: absolute;
+            z-index: 100;
+          }
+
+          .water-drop:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: #BCBCBC;
+            border-radius: 20px;
+          }
+
+          .water-drop:after {
+            content: '';
+            height: 0;
+            width: 0;
+            border: 8px transparent solid;
+            display: block;
+            position: absolute;
+            top: 2px;
+            left: 15px;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid #BCBCBC;
+          }
+        }
       }
 
       pre{
@@ -220,4 +332,8 @@ export default {
       }
     }
   }
+
+  /*水滴形状图*/
+      
+      /*水滴形状图*/
 </style>

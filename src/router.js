@@ -8,10 +8,11 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: './',
+  // base: process.env.BASE_URL,
+  base: './', // 与vue.config.js中的publicPath保持一致
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: Home
     },

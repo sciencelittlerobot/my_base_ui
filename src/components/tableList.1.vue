@@ -96,24 +96,41 @@
     watch: {
       currentPage: function (newVal, oldVal) {
         if (newVal === 1) {
-          this.getPageList();
+          this.getPageList(newVal);
         }
       },
       totalPage: function (newVal, oldVal) {
-        this.getPageList();
+        this.getPageList(1);
       },
       curPage: function (newVal, oldVal) {
         this.currentPage = this.curPage;
       },
       pageSize: function (newVal, oldVal) {
-        this.getPageList();
+        this.getPageList(1);
       }
+      // dataList: function () {
+      //   let _this = this;
+
+      //   _this.$nextTick(function () {
+      //     let eleHeight = document.querySelector('.tabel').offsetHeight;
+      //     let curHeight = document.querySelector('.table-2').offsetHeight;
+
+      //     if (_this.firstLoad === true) {
+      //       _this.initTableHeight = eleHeight;
+      //     }
+      //     _this.firstLoad = _this.initTableHeight === 0;
+      //     if (_this.initTableHeight >= curHeight && curHeight !== 0) {
+      //       document.querySelector('.tabel').style.height = curHeight + 'px';
+      //     }
+      //   });
+      // }
     },
     mounted () {
       let _this = this;
 
       _this.currentPage = this.curPage;
-      _this.getPageList();
+      _this.minNum = this.currentPage;
+      _this.getPageList(this.minNum);
     },
     methods: {
       pageCallback: function (type, page) {
@@ -129,88 +146,45 @@
             return;
           }
           _this.currentPage = _this.currentPage + 1;
-        } else if (type === 'current' && page.key === 'more_prev') {
-          _this.currentPage = (_this.currentPage > _this.totalPage - ((_this.maxNum / 2) + 1)) ? (_this.totalPage - ((_this.maxNum / 2) + 1) - 1) : (_this.currentPage - 2);
-        } else if (type === 'current' && page.key === 'more_next') {
-          _this.currentPage = (_this.currentPage < (_this.maxNum / 2) + 1) ? ((_this.maxNum / 2) + 1 + 1) : _this.currentPage + 2;
+        } else if (type === 'current' && page.key === 'more') {
+          let midNum = (_this.maxNum / 2) + 1;
+
+          _this.currentPage = (Math.floor(_this.currentPage / midNum) + 1) * midNum;
         } else {
           _this.currentPage = page.value;
         }
 
-        _this.getPageList();
+        if (_this.currentPage < _this.perMoveNum || _this.totalPage <= _this.maxNum) {
+          _this.minNum = 1;
+        } else if (_this.currentPage < _this.totalPage - _this.maxNum + 1 && _this.currentPage !== 1) {
+          _this.minNum = (_this.currentPage % _this.perMoveNum) !== 0 ? (_this.currentPage - (_this.currentPage % _this.perMoveNum)) : _this.currentPage;
+        } else {
+          _this.minNum = _this.totalPage - _this.maxNum + 1;
+        }
+        _this.getPageList(_this.minNum);
         _this.$emit('pageCallback', {currentPage: _this.currentPage});
       },
-      getPageList: function () {
+      getPageList: function (initNum) {
         let _this = this;
-        let minLimitNum = (_this.maxNum / 2) + 1;
-        let maxLimitNum = _this.totalPage - ((_this.maxNum / 2) + 1);
 
         _this.pageList = [];
-        if (_this.totalPage > 8) {
-          if (_this.currentPage <= minLimitNum) {
-            for (let i = 1;i <= minLimitNum;i++) {
-              _this.pageList.push({
-                key: 'number',
-                value: i
-              });
-            }
-            _this.pageList.push({
-              key: 'more_next',
-              value: '...'
-            });
-            for (let i = _this.totalPage - 1;i <= _this.totalPage;i++) {
-              _this.pageList.push({key: 'number', value: i});
-            }
-          } else if (_this.currentPage > minLimitNum && _this.currentPage < maxLimitNum) {
-            _this.pageList.push({
-              key: 'number',
-              value: 1
-            });
-            _this.pageList.push({
-              key: 'more_prev',
-              value: '...'
-            });
-            _this.pageList.push({
-              key: 'number',
-              value: _this.currentPage - 1
-            });
-            _this.pageList.push({
-              key: 'number',
-              value: _this.currentPage
-            });
-            _this.pageList.push({
-              key: 'number',
-              value: _this.currentPage + 1
-            });
-            _this.pageList.push({
-              key: 'more_next',
-              value: '...'
-            });
-            for (let i = _this.totalPage - 1;i <= _this.totalPage;i++) {
-              _this.pageList.push({key: 'number', value: i});
-            }
-          } else {
-            _this.pageList.push({
-              key: 'number',
-              value: 1
-            });
-            _this.pageList.push({
-              key: 'more_prev',
-              value: '...'
-            });
-            for (let i = maxLimitNum;i <= _this.totalPage;i++) {
-              _this.pageList.push({
-                key: 'number',
-                value: i
-              });
-            }
+        if (_this.totalPage - initNum + 1 > _this.maxNum) {
+          for (let i = initNum;i <= _this.maxNum / 2 + initNum;i++) {
+            let item = i;
+
+            _this.pageList.push({key: 'number', value: item});
+          }
+          _this.pageList.push({key: 'more', value: '...'});
+          for (let i = _this.totalPage - 1;i <= _this.totalPage;i++) {
+            let item = i;
+
+            _this.pageList.push({key: 'number', value: item});
           }
         } else {
-          for (let i = 1;i <= _this.totalPage;i++) {
-            _this.pageList.push({
-              key: 'number',
-              value: i
-            });
+          for (let i = initNum;i <= _this.totalPage;i++) {
+            let item = i;
+
+            _this.pageList.push({key: 'number', value: item});
           }
         }
       },
