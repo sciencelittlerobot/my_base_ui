@@ -130,9 +130,9 @@
           }
           _this.currentPage = _this.currentPage + 1;
         } else if (type === 'current' && page.key === 'more_prev') {
-          _this.currentPage = (_this.currentPage > _this.totalPage - ((_this.maxNum / 2) + 1)) ? (_this.totalPage - ((_this.maxNum / 2) + 1) - 1) : (_this.currentPage - 2);
+          _this.currentPage = (_this.currentPage >= _this.totalPage - ((_this.maxNum / 2) + 1)) ? (_this.totalPage - ((_this.maxNum / 2) + 1) - 1) : ((_this.currentPage - 2) < ((_this.maxNum / 2) + 1) ? ((_this.maxNum / 2) + 1) : (_this.currentPage - 2));
         } else if (type === 'current' && page.key === 'more_next') {
-          _this.currentPage = (_this.currentPage < (_this.maxNum / 2) + 1) ? ((_this.maxNum / 2) + 1 + 1) : _this.currentPage + 2;
+          _this.currentPage = (_this.currentPage <= (_this.maxNum / 2) + 1) ? ((_this.maxNum / 2) + 1 + 1) : (((_this.currentPage + 2) > _this.totalPage - ((_this.maxNum / 2) + 1)) ? (_this.totalPage - ((_this.maxNum / 2) + 1)) : (_this.currentPage + 2));
         } else {
           _this.currentPage = page.value;
         }
