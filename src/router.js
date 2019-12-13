@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
-import DragSortPage from './views/DragSortPage.vue'
-import CategoryScrollPage from './views/CategoryScrollPage.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from './views/Home.vue';
+import About from './views/About.vue';
+import DragSortPage from './views/DragSortPage.vue';
+import CategoryScrollPage from './views/CategoryScrollPage.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -19,15 +20,19 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component: About
     },
     {
       path: '/dragSortPage',
+      alias: '/test1', // 路由别名
       name: 'DragSortPage',
-      component: DragSortPage
+      component: DragSortPage,
+      beforeEnter: (to, from, next) => {
+        console.log('我进入了params模板');
+        console.log(to);
+        console.log(from);
+        next();
+      }
     },
     {
       path: '/categoryScrollPage',

@@ -11,7 +11,11 @@
     <div class="item-wrap">
       <p class="item-title"><span>tableList组件</span></p>
       <div class="item-cpm" style="width: 100%;">
-        <cpm-TableList v-bind="tableConfig" @tableCallback="tableCallback" @pageCallback="pageCallback"></cpm-TableList>
+        <p class="line-box">
+          <button class="btn btn-def" @click="showCheckList">显示选中的内容</button>
+          <button class="btn btn-del" @click="showCheckList">批量删除</button>
+          </p>
+        <cpm-TableList v-bind="tableConfig" @tableCallback="tableCallback" @pageCallback="pageCallback" @checkCallback="checkCallback"></cpm-TableList>
       </div>
     </div>
 
@@ -91,7 +95,8 @@
           dataList: [],
           curPage: 1,
           pageSize: 12,
-          totalPage: 1
+          totalPage: 1,
+          showCheckbox: true
         }
       };
     },
@@ -112,6 +117,7 @@
         _this.tableConfig.dataList = [];
         ajaxGetDataList('', function (result) {
           _this.tableConfig.dataList = result.result.data.map(function (item, index) {
+            item.checked = false;
             item.button = [
               {theme: 'info', text: '详情'},
               {theme: 'def', text: '编辑'},
@@ -124,6 +130,15 @@
         });
       },
 
+      showCheckList: function () {
+        let _this = this;
+        let tempArr = _this.tableConfig.dataList.filter((item, index) => {
+          return item.checked === true;
+        });
+
+        console.log('选中的内容暂时在控制台显示：', tempArr);
+      },
+
       // tableList组件表格按钮回调
       tableCallback: function (result) {
         console.log('tableCallback-----result=', JSON.stringify(result));
@@ -134,6 +149,10 @@
         this.tableConfig.curPage = result.currentPage;
         this.getTableDataList();
         console.log('pageCallback-----result=', JSON.stringify(result));
+      },
+
+      checkCallback: function (result) {
+        this.tableConfig.dataList = result;
       }
     }
   };
@@ -185,6 +204,41 @@
       .item-cpm{
         width: 200px;
         // min-height: 200px;
+
+        .line-box{
+          text-align: left;
+          margin-bottom: 10px;
+        }
+
+        .btn{
+          padding: 5px 12px;
+          display: inline-block;
+          font-size: 14px;
+          border-radius: 2px;
+          margin-right: 10px;
+
+          &.btn-def{
+            border: 1px solid #298fff;
+            background: #ffffff;
+            color: #298fff;
+
+            &:active{
+              border: 1px solid #6eb3ff;
+              color: #6eb3ff;
+            }
+          }
+
+          &.btn-del{
+            border: 1px solid #ff2d2d;
+            background: #ffffff;
+            color: #ff2d2d;
+
+            &:active{
+              border: 1px solid #ff8f8f;
+              color: #ff8f8f;
+            }
+          }
+        }
       }
 
       .table-viewer{

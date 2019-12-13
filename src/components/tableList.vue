@@ -2,12 +2,14 @@
   <div class="table-viewer">
     <table class="table table-title">
         <tr>
+          <th style="text-align:center;" v-if="showCheckbox === true"><input type="checkbox" class="table-checkbox" v-model="checkAll" @change="toggleCheckAll"></th>
           <th v-for="(item,index) in tableCols" :key="'title_'+index">{{item.title}}</th>
         </tr>
     </table>
     <vperfect-scrollbar class="tabel" :settings="settings" ref="scroll" @ps-scroll-y="scrollY" @ps-y-reach-end="scrollEnd">
       <table class="table table-2">
-        <tr v-for="(data, index) in dataList" :key="'tr_'+index">
+        <tr v-for="(data, index) in list" :key="'tr_'+index">
+          <th style="text-align:center;" v-if="showCheckbox === true"><input type="checkbox" class="table-checkbox" v-model="data.checked" @change="toggleCheck"></th>
           <template v-for="(item, ind) in tableCols">
             <td v-if="item.name === 'button'" :key="'td_'+ind">
               <a class="btn" :class="'btn-'+btn.theme" v-for="(btn, btnIndex) in data[item.name]" @click="tableCallback(btn, data)" :key="'btn-'+btnIndex">{{btn.text}}</a>
@@ -70,6 +72,10 @@
         default: function () {
           return {show: true};
         }
+      },
+      showCheckbox: {
+        type: Boolean,
+        default: false
       }
     },
     components: {
@@ -77,6 +83,7 @@
     },
     data () {
       return {
+        list: [],
         currentPage: 1,
         pageList: [],
         // 最多显示的个数
@@ -89,11 +96,13 @@
           wheelSpeed: 0.5,
           mark: false
         },
-        initTableHeight: 0,
-        firstLoad: true
+        checkAll: false
       };
     },
     watch: {
+      dataList: function (newVal, oldVal) {
+        this.list = this.dataList;
+      },
       currentPage: function (newVal, oldVal) {
         if (newVal === 1) {
           this.getPageList();
@@ -112,7 +121,8 @@
     mounted () {
       let _this = this;
 
-      _this.currentPage = this.curPage;
+      _this.currentPage = _this.curPage;
+      _this.list = _this.dataList;
       _this.getPageList();
     },
     methods: {
@@ -224,6 +234,30 @@
       },
       scrollEnd: function () {
         // 
+      },
+
+      toggleCheckAll: function () {
+        let listStr = JSON.stringify(this.list);
+
+        if (this.checkAll === true) {
+          listStr = listStr.replace(new RegExp(/"checked":false/g), '"checked":true');
+          this.list = JSON.parse(listStr);
+        } else {
+          listStr = listStr.replace(new RegExp(/"checked":true/g), '"checked":false');
+          this.list = JSON.parse(listStr);
+        }
+        this.$emit('checkCallback', this.list);
+      },
+
+      toggleCheck: function () {
+        let listStr = JSON.stringify(this.list);
+
+        if (listStr.indexOf('"checked":false') <= -1) {
+          this.checkAll = true;
+        } else {
+          this.checkAll = false;
+        }
+        this.$emit('checkCallback', this.list);
       }
     }
   };
@@ -429,6 +463,37 @@
 
     .tabel{
       height: calc(100% - 50px - 40px);
+    }
+
+    .table-checkbox[type="checkbox"]{
+      width: 17px;
+      height: 17px;
+      position: relative;
+      border-radius: 2px;
+      cursor: pointer;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        line-height: 17px;
+        text-align: center;
+        color: #dddddd;
+        font-size: 16px;
+        background-color: #ffffff;
+        border-radius: 2px;
+        border: 1px solid #dddddd;
+      }
+
+      &:checked::before{
+        content: "\2713";
+        border-color: #298fff;
+        color: #298fff;
+        font-weight: bold;
+      }
     }
   }
 </style>

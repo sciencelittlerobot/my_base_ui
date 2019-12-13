@@ -146,6 +146,138 @@
         </pre>
         <p class="notes"></p>
       </li>
+
+      <li class="list-item">
+        <p class="title"><i class="title-mark"></i>input的复选框checkbox的样式修改，他在这！！！ >>>>>> <span class="new-checkbox"><input type="checkbox" id="newCheckbox" /><label for="newCheckbox">选项</label></span></p>
+        <pre>
+          .new-checkbox{
+            height: 18px;
+            line-height: 18px;
+            display: inline-flex;
+            align-items: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+
+            input[type="checkbox"]{
+              width: 17px;
+              height: 17px;
+              position: relative;
+              border-radius: 2px;
+              cursor: pointer;
+              margin-right: 8px;
+
+              &amp;::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 16px;
+                height: 16px;
+                line-height: 17px;
+                text-align: center;
+                color: #dddddd;
+                font-size: 16px;
+                background-color: #ffffff;
+                border-radius: 2px;
+                border: 1px solid #dddddd;
+              }
+
+              &amp;:checked::before{
+                content: "\2713";
+                border-color: #298fff;
+                color: #298fff;
+                font-weight: bold;
+              }
+            }
+
+            label{
+              height: 18px;
+              display: inline-block;
+              font-size: 14px;
+              cursor: pointer;
+            }
+          }
+
+          &lt;span class="new-checkbox"&gt;&lt;input type="checkbox" id="newCheckbox" /&gt;&lt;label for="newCheckbox"&gt;选项&lt;/label&gt;&lt;/span&gt;
+        </pre>
+        <p class="notes">注：因为选中项点击快的快，文字会被选中，让文字不被选中，体验效果更好哦。</p>
+      </li>
+
+      <li class="list-item">
+        <p class="title"><i class="title-mark"></i>input的复选框radio的样式修改，他在这！！！ >>>>>> <span class="new-radio"><input type="radio" id="newRadio1" name="new_radio" checked /><label for="newRadio1">选项一</label></span><span class="new-radio"><input type="radio" id="newRadio2" name="new_radio" /><label for="newRadio2">选项二</label></span></p>
+        <pre>
+          .new-radio{
+            height: 18px;
+            line-height: 18px;
+            display: inline-flex;
+            margin-right: 20px;
+            align-items: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+
+            input[type="radio"]{
+              width: 17px;
+              height: 17px;
+              appearance: none;
+              position: relative;
+              cursor: pointer;
+              margin-right: 8px;
+
+              &amp;::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 16px;
+                height: 16px;
+                line-height: 17px;
+                text-align: center;
+                font-size: 16px;
+                background-color: #ffffff;
+                border-radius: 50%;
+                border: 1px solid #dddddd;
+              }
+
+              &amp;:checked::before{
+                content: "";
+                background-color: #298fff;
+                border-color: #298fff;
+              }
+
+              &amp;:checked::after{
+                content: '';
+                width: 10px;
+                height: 5px;
+                border: 2px solid white;
+                border-top: transparent;
+                border-right: transparent;
+                text-align: center;
+                display: block;
+                position: absolute;
+                top: 4px;
+                left: 3px;
+                vertical-align: middle;
+                transform: rotate(-45deg);
+              }
+            }
+
+            label{
+              height: 18px;
+              display: inline-block;
+              font-size: 14px;
+              cursor: pointer;
+            }
+          }
+
+          &lt;span class="new-radio"&gt;&lt;input type="radio" id="newRadio1" name="new_radio" checked /&gt;&lt;label for="newRadio1"&gt;选项一&lt;/label&gt;&lt;/span&gt;
+          &lt;span class="new-radio"&gt;&lt;input type="radio" id="newRadio2" name="new_radio" /&gt;&lt;label for="newRadio2"&gt;选项二&lt;/label&gt;&lt;/span&gt;
+        </pre>
+        <p class="notes">注：因为选中项点击快的快，文字会被选中，让文字不被选中，体验效果更好哦。原来打钩也可以写的呀，孤陋寡闻了。。。</p>
+      </li>
     </ul>
 
   </div>
@@ -309,6 +441,121 @@ export default {
             border-right: 8px solid transparent;
             border-bottom: 8px solid transparent;
             border-left: 8px solid #BCBCBC;
+          }
+        }
+
+        .new-checkbox{
+          height: 18px;
+          line-height: 18px;
+          display: inline-flex;
+          align-items: center;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -o-user-select: none;
+          user-select: none;
+
+          input[type="checkbox"]{
+            width: 17px;
+            height: 17px;
+            position: relative;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-right: 8px;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 16px;
+              height: 16px;
+              line-height: 17px;
+              text-align: center;
+              color: #dddddd;
+              font-size: 16px;
+              background-color: #ffffff;
+              border-radius: 2px;
+              border: 1px solid #dddddd;
+            }
+
+            &:checked::before{
+              content: "\2713";
+              border-color: #298fff;
+              color: #298fff;
+              font-weight: bold;
+            }
+          }
+
+          label{
+            height: 18px;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+          }
+        }
+
+        .new-radio{
+          height: 18px;
+          line-height: 18px;
+          display: inline-flex;
+          margin-right: 20px;
+          align-items: center;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -o-user-select: none;
+          user-select: none;
+
+          input[type="radio"]{
+            width: 17px;
+            height: 17px;
+            appearance: none;
+            position: relative;
+            cursor: pointer;
+            margin-right: 8px;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 16px;
+              height: 16px;
+              line-height: 17px;
+              text-align: center;
+              font-size: 16px;
+              background-color: #ffffff;
+              border-radius: 50%;
+              border: 1px solid #dddddd;
+            }
+
+            &:checked::before{
+              content: "";
+              background-color: #298fff;
+              border-color: #298fff;
+            }
+
+            &:checked::after{
+              content: '';
+              width: 10px;
+              height: 5px;
+              border: 2px solid white;
+              border-top: transparent;
+              border-right: transparent;
+              text-align: center;
+              display: block;
+              position: absolute;
+              top: 4px;
+              left: 3px;
+              vertical-align: middle;
+              transform: rotate(-45deg);
+            }
+          }
+
+          label{
+            height: 18px;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
           }
         }
       }
