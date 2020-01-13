@@ -14,8 +14,24 @@
         <p class="line-box">
           <button class="btn btn-def" @click="showCheckList">显示选中的内容</button>
           <button class="btn btn-del" @click="showCheckList">批量删除</button>
-          </p>
+        </p>
         <cpm-TableList v-bind="tableConfig" @tableCallback="tableCallback" @pageCallback="pageCallback" @checkCallback="checkCallback"></cpm-TableList>
+      </div>
+    </div>
+
+    <div class="item-wrap">
+      <p class="item-title"><span>tableList组件</span></p>
+      <div class="item-cpm" style="width: 100%;">
+        <button class="btn btn-def" @click="showPopupLoad">显示加载弹窗</button>
+        <button class="btn btn-def" @click="showPopupToast">显示toast弹窗</button>
+        <button class="btn btn-def" @click="showPopupConfirm">显示confirm弹窗</button>
+        <button class="btn btn-def" @click="showPopupPrompt">显示prompt弹窗</button>
+        <cpm-PopupToast v-bind="popupLoadConfig"></cpm-PopupToast>
+        <cpm-PopupToast v-bind="popupToastConfig"></cpm-PopupToast>
+        <cpm-PopupConfirm v-bind="PopupConfirmConfig" @callback="confirmCallback">
+          <template v-slot:content>{{PopupConfirmConfig.msg}}</template>
+        </cpm-PopupConfirm>
+        <cpm-PopupPrompt v-bind="PopupPromptConfig" @callback="promptCallback"></cpm-PopupPrompt>
       </div>
     </div>
 
@@ -30,8 +46,8 @@
 
 <script>
   // @ is an alias to /src
+  import {TableList, PopupToast, PopupConfirm, PopupPrompt} from 'littlerobot_base_ui';
   import CustomSelect from "@/components/customSelect.vue";
-  import TableList from "@/components/tableList.vue";
   import CommonCss from "@/components/commonCss.vue";
   import {ajaxGetDataList} from '@/ajax.js';
   import '@/mock.js';
@@ -41,7 +57,10 @@
     components: {
       'cpmCustomSelect': CustomSelect,
       'cpmTableList': TableList,
-      'cpmCommoncss': CommonCss
+      'cpmCommoncss': CommonCss,
+      'cpmPopupToast': PopupToast,
+      'cpmPopupConfirm': PopupConfirm,
+      'cpmPopupPrompt': PopupPrompt
     },
     data () {
       return {
@@ -97,6 +116,28 @@
           pageSize: 12,
           totalPage: 1,
           showCheckbox: true
+        },
+        popupLoadConfig: {
+          msg: '加载中...',
+          direction: 'vr', // hr表示水平方向，vr表示垂直方向
+          duration: 3000,
+          type: 'loading'
+        },
+        popupToastConfig: {
+          msg: '依赖包完成',
+          direction: 'vr', // hr表示水平方向，vr表示垂直方向
+          duration: 3000,
+          type: 'success'
+        },
+        PopupConfirmConfig: {
+          show: false,
+          title: '提示',
+          msg: '您已经成功引入自定义的弹窗组件了吗？'
+        },
+        PopupPromptConfig: {
+          show: false,
+          title: '输入信息',
+          inputType: 'password'
         }
       };
     },
@@ -153,6 +194,42 @@
 
       checkCallback: function (result) {
         this.tableConfig.dataList = result;
+      },
+
+      showPopupLoad: function () {
+        let _this = this;
+
+        this.$eventbus.$emit('toast', this.popupLoadConfig);
+      },
+
+      showPopupToast: function () {
+        this.$eventbus.$emit('toast', this.popupToastConfig);
+      },
+
+      showPopupConfirm: function () {
+        this.PopupConfirmConfig.show = true;
+      },
+
+      confirmCallback: function (data) {
+        this.PopupConfirmConfig.show = false;
+
+        if (data.index === 0) {
+          this.popupToastConfig.msg = '更新成功';
+          this.$eventbus.$emit('toast', this.popupToastConfig);
+        }
+      },
+
+      showPopupPrompt: function () {
+        this.PopupPromptConfig.show = true;
+      },
+
+      promptCallback: function (data) {
+        this.PopupPromptConfig.show = false;
+        if (data.index === 0) {
+          this.popupToastConfig.msg = '您输入的内容是：' + data.text;
+          this.popupToastConfig.type = 'info';
+          this.$eventbus.$emit('toast', this.popupToastConfig);
+        }
       }
     }
   };
@@ -166,6 +243,8 @@
 </style>
 
 <style lang="scss" scoped>
+  @import '../../node_modules/littlerobot_base_ui/lib/littlerobot_base_ui.css';
+
   .home{
     width: 100%;
     display: block;
