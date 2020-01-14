@@ -235,13 +235,6 @@
   };
 </script>
 
-<style>
-.home .table-viewer .table th:nth-last-of-type(2),
-.home .table-viewer .table td:nth-last-of-type(2){
-  width: 230px;
-}
-</style>
-
 <style lang="scss" scoped>
   @import '../../node_modules/littlerobot_base_ui/lib/littlerobot_base_ui.css';
 
@@ -325,4 +318,14 @@
       }
     }
   }
+</style>
+
+<style>
+.home .table-viewer .table th:nth-last-of-type(2),
+.home .table-viewer .table td:nth-last-of-type(2){
+  width: 230px;
+}
+.home .table-viewer .page-bar .page-list li{
+  min-width: 24px;
+}
 </style>
