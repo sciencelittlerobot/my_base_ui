@@ -24,15 +24,19 @@
     "@vue/cli-service": "^3.0.4",
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
+    "acorn": "^6.4.1",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "littlerobot_base_ui": "^0.1.1",
+    "kind-of": "^6.0.3",
+    "littlerobot_base_ui": "^0.1.2",
+    "minimist": "^1.2.3",
     "mockjs": "^1.1.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",
     "serialize-javascript": "^2.1.1",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "websocket-extensions": "^0.1.4"
   }
 }

@@ -8,7 +8,7 @@ import CategoryScrollPage from './views/CategoryScrollPage.vue';
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   // base: process.env.BASE_URL,
   base: './', // 与vue.config.js中的publicPath保持一致
   routes: [
