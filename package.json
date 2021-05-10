@@ -33,7 +33,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "kind-of": "^6.0.3",
     "littlerobot_base_ui": "^0.1.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "minimist": "^1.2.3",
     "mockjs": "^1.1.0",
     "node-sass": "^4.12.0",
