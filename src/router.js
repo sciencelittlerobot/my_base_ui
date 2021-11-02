@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import About from './views/About.vue';
+import FormList from './views/FormList.vue';
+import CommonCss from './views/CommonCss.vue';
 import DragSortPage from './views/DragSortPage.vue';
 import CategoryScrollPage from './views/CategoryScrollPage.vue';
 
@@ -14,13 +16,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'formlist',
+      component: FormList
     },
     {
       path: '/about',
       name: 'about',
       component: About
+    },
+    // {
+    //   path: '/formlist',
+    //   name: 'formlist',
+    //   component: FormList
+    // },
+    {
+      path: '/commoncss',
+      name: 'commoncss',
+      component: CommonCss
     },
     {
       path: '/dragSortPage',

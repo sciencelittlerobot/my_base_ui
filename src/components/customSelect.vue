@@ -164,6 +164,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor: pointer;
 
         &:hover{
           background: #d1e7ff;
